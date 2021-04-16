@@ -5,6 +5,7 @@ struct ContentView: View {
     let calculator = Calculator.Companion()
     let greet = Greeting().greeting()
     
+    
     @State private var firstNum: String = "0"
     @State private var secondNum: String = "0"
     private var sum: String {
@@ -15,8 +16,29 @@ struct ContentView: View {
         }
     }
     
+    @State private var number: String = "0"
+
+    @State private var called: Bool = false
+
+     func register() {
+        if(!called){
+            let x = Greeting().greetingFlowWrapped()
+            x.watch {(newNumber) in
+                self.number = newNumber?.stringValue ?? ""
+                print("Hello " + (newNumber?.stringValue ?? ""))
+            }
+            self.setCalled(cal: true)
+        }
+    }
+    
+     func setCalled(cal : Bool){
+        called = cal
+    }
+    
+    
     var body: some View {
-        VStack(alignment: .center) {
+        register()
+        return VStack(alignment: .center) {
             Text(greet)
             HStack(alignment: .center) {
                 TextField("A", text: $firstNum)
@@ -30,9 +52,12 @@ struct ContentView: View {
                     .frame(width: 30)
                 Text("=")
                 Text(sum)
+            
             }
+            Text(number)
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
