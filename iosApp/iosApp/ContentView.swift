@@ -18,26 +18,20 @@ struct ContentView: View {
     
     @State private var number: String = "0"
 
-    @State private var called: Bool = false
-
      func register() {
-        if(!called){
+        
             let x = Greeting().greetingFlowWrapped()
             x.watch {(newNumber) in
                 self.number = newNumber?.stringValue ?? ""
                 print("Hello " + (newNumber?.stringValue ?? ""))
             }
-            self.setCalled(cal: true)
-        }
+        
     }
     
-     func setCalled(cal : Bool){
-        called = cal
-    }
     
     
     var body: some View {
-        register()
+        
         return VStack(alignment: .center) {
             Text(greet)
             HStack(alignment: .center) {
@@ -55,6 +49,8 @@ struct ContentView: View {
             
             }
             Text(number)
+        }.onAppear(){
+            register()
         }
     }
     

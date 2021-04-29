@@ -31,7 +31,7 @@ class Greeting {
 
 fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
 
-internal expect fun dispatcher(): CoroutineDispatcher
+internal expect fun mainDispatcher(): CoroutineDispatcher
 
 class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
     fun watch(block: (T) -> Unit): Closeable {
@@ -39,7 +39,7 @@ class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
 
         onEach {
             block(it)
-        }.launchIn(CoroutineScope(dispatcher() + job))
+        }.launchIn(CoroutineScope(Dispatchers.Main + job))
 
         return object : Closeable {
             override fun close() {

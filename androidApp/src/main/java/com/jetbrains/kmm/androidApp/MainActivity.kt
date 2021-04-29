@@ -20,7 +20,10 @@ class MainActivity : AppCompatActivity() {
         
         val greeter = Greeting()
         tv.text = greeter.greeting()
-        greeter.greetingFlowWrapped().watch { tv.text = "New number $it" }
+
+
+
+        greeter.greetingFlowWrapped().watch { tv.text = "$it" }
 
         val numATV: EditText = findViewById(R.id.editTextNumberDecimalA)
         val numBTV: EditText = findViewById(R.id.editTextNumberDecimalB)

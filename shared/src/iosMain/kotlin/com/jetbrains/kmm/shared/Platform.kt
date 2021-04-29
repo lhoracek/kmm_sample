@@ -9,7 +9,7 @@ actual class Platform actual constructor() {
     actual val platform: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
-internal actual fun dispatcher(): CoroutineDispatcher = UI
+internal actual fun mainDispatcher(): CoroutineDispatcher = UI
 
 
 @OptIn(InternalCoroutinesApi::class)
