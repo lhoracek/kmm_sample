@@ -20,10 +20,9 @@ struct ContentView: View {
 
      func register() {
         
-            let x = Greeting().greetingFlowWrapped()
-            x.watch {(newNumber) in
-                self.number = newNumber?.stringValue ?? ""
-                print("Hello " + (newNumber?.stringValue ?? ""))
+        Greeting().greetingFlowWrapped(number: 1)
+            .watch {(response) in
+              ...
             }
         
     }

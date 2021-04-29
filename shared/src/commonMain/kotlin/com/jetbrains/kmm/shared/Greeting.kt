@@ -17,17 +17,25 @@ class Greeting {
     }
 
 
-    fun greetingFlow(): Flow<Int> =
+    fun greetingFlow(number: Int): Flow<Response<Int>> =
         flow {
+            emit(Response.Progress)
             while(true) {
                 val number = getNumber()
-                emit(number)
+                emit(Response.Success(number))
             }
         }
 
-    fun greetingFlowWrapped(): CommonFlow<Int> = greetingFlow().asCommonFlow()
+    fun greetingFlowWrapped(number: Int): CommonFlow<Response<Int>> = greetingFlow(number).asCommonFlow()
 
 }
+
+
+sealed class Response<out T>{
+    data class Success<T>(val value: T): Response<T>()
+    object Progress: Response<Nothing>()
+}
+
 
 fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
 
